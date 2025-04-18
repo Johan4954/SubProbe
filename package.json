@@ -1,0 +1,30 @@
+{
+  "name": "subprobe",
+  "version": "0.1.0",
+  "main": "index.js",
+  "description": "Extract hidden endpoints and internal subdomains from JavaScript files via semantic analysis.",
+  "type": "module",
+  "directories": {
+    "lib": "lib"
+  },
+  "bin": {
+    "subprobe": "./bin/subprobe.js"
+  },
+  "scripts": {
+    "test": "node bin/subprobe.js"
+  },
+  "keywords": [],
+  "author": "devploit",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.8.4",
+    "chalk": "^5.4.1",
+    "cheerio": "^1.0.0",
+    "cli-progress": "^3.12.0",
+    "commander": "^13.1.0",
+    "esprima": "^4.0.1",
+    "ora": "^8.2.0",
+    "tldts": "^7.0.0",
+    "xml2js": "^0.6.2"
+  }
+}
