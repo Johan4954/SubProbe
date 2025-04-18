@@ -10,10 +10,6 @@
   <img src="https://img.shields.io/github/stars/devploit/SubProbe?style=flat-square" alt="Stars">
 </p>
 
-<p align="center">
-  <b>Extract hidden endpoints and internal subdomains from JavaScript files through semantic analysis</b>
-</p>
-
 SubProbe is a powerful JavaScript-aware web crawler designed for security researchers and penetration testers. It discovers hidden endpoints, APIs, and subdomains by analyzing JavaScript files within web applications — revealing potential attack surfaces that traditional crawlers and subdomain enumeration tools miss.
 
 ## 🚀 Features
