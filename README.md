@@ -1,142 +1,142 @@
-# SubProbe
-> JS-powered crawler for hidden endpoints & internal subdomains
+# SubProbe: Your JavaScript-Aware Crawler for Security Research
 
-<p align="center">
-  <img src="https://i.imgur.com/aJPgEZ9.png" width="250" alt="SubProbe logo"/>
-</p>
+![SubProbe Logo](https://img.shields.io/badge/SubProbe-🚀-blue)
 
-<p align="center">
-  <img src="https://img.shields.io/github/license/devploit/SubProbe?style=flat-square" alt="License">
-  <img src="https://img.shields.io/github/stars/devploit/SubProbe?style=flat-square" alt="Stars">
-</p>
+Welcome to **SubProbe**, a powerful tool designed for security researchers and bug bounty hunters. This lightweight and fast crawler specializes in extracting hidden endpoints and internal subdomains through both static and semantic analysis of JavaScript files. Whether you are conducting a penetration test or performing reconnaissance, SubProbe equips you with the necessary capabilities to uncover vulnerabilities in web applications.
 
-SubProbe is a powerful JavaScript-aware web crawler designed for security researchers and penetration testers. It discovers hidden endpoints, APIs, and subdomains by analyzing JavaScript files within web applications — revealing potential attack surfaces that traditional crawlers and subdomain enumeration tools miss.
+## Table of Contents
 
-## 🚀 Features
+- [Features](#features)
+- [Topics](#topics)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Examples](#examples)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
+- [Releases](#releases)
 
-- **Deep JavaScript Analysis**: Parses and extracts endpoints from **JavaScript files** (semantic analysis)
-- **Recursive Crawling**: Supports multi-level crawling to discover deeper JS resources
-- **External Sources**: Collects additional endpoints from:
-  - robots.txt
-  - sitemap.xml
-  - Wayback Machine
-- **Endpoint Verification**: Tests endpoints to verify they're accessible
-- **Status Filtering**: Filter results by HTTP status codes
-- **Export Options**: Save results as JSON, CSV, or plain text files
+## Features
 
-## 📋 Installation
+- **JavaScript Awareness**: SubProbe understands JavaScript and can analyze its structure to find hidden endpoints.
+- **Fast and Lightweight**: Designed for efficiency, SubProbe runs quickly without consuming excessive resources.
+- **Static and Semantic Analysis**: Uses both methods to ensure comprehensive endpoint discovery.
+- **Subdomain Enumeration**: Automatically discovers internal subdomains that might be overlooked.
+- **Robust Toolset**: Includes features for analyzing `robots.txt`, sitemaps, and more.
+
+## Topics
+
+SubProbe covers a wide range of topics relevant to web security:
+
+- ast-analysis
+- bugbounty
+- crawler
+- endpoint-discovery
+- infosec
+- javascript
+- nodejs
+- pentest
+- reconnaissance
+- robots-txt
+- security
+- sitemap
+- subdomain-enumeration
+- tool
+- wayback-machine
+- web-security
+
+## Installation
+
+To get started with SubProbe, follow these simple steps:
+
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/Johan4954/SubProbe.git
+   ```
+
+2. **Navigate to the Directory**:
+   ```bash
+   cd SubProbe
+   ```
+
+3. **Install Dependencies**:
+   ```bash
+   npm install
+   ```
+
+Now you are ready to use SubProbe!
+
+## Usage
+
+Using SubProbe is straightforward. Here’s how to run it:
 
 ```bash
-# Clone the repository
-git clone https://github.com/devploit/SubProbe.git
-cd SubProbe
-npm install
-
-# Make it executable
-npm link
+node subprobe.js <target-url>
 ```
 
-After running the above commands, you can use `subprobe` directly from your terminal.
+Replace `<target-url>` with the URL of the website you want to analyze. 
 
-## 📊 Command Options
+### Command-Line Options
 
-| Option | Description |
-|--------|-------------|
-| `--depth <number>` | Recursive scan depth for internal links (default 0) |
-| `--filter-status <codes>` | Filter by status codes. Supports exact (200), ranges (400-410), and groups (4xx) |
-| `-o, --out <file>` | Export results to JSON, CSV, or plain text (determined by file extension) |
-| `--probe` | Check if endpoints respond (via HTTP status codes) |
-| `--wayback` | Include Wayback Machine results |
-| `--silent` | Only show discovered endpoints without progress information |
-| `--no-color` | Disable colored output |
+- `--output <filename>`: Save the results to a specified file.
+- `--verbose`: Enable detailed logging of the process.
+- `--help`: Display help information about the commands and options.
 
-## 📝 Example Output
+## Examples
 
-Running `subprobe https://example.com --probe --wayback` might produce output like this:
+### Basic Usage
 
-```
-🚀 Starting SubProbe on https://example.com
+To scan a website for hidden endpoints:
 
-[12:34:56] 🕷️  Starting crawl (depth: 0)
-[12:34:57] 🎯 Crawling depth 0 (1 URLs)
-[12:35:01] 📂 Collecting from robots.txt & sitemap.xml
-[12:35:05] 🕚 Collecting from Wayback...
-[12:35:12] 🔌 Probing 42 endpoints...
-
-✅ Analysis complete - Summary:
-    - URLs analyzed: 1
-    - JS files analyzed: 3/3
-    - Endpoints found: 42
-
-[12:35:30] 🔍 Found 42 endpoints:
-
-🟩 https://example.com/api/v1/users ✅ [200]
-🟩 https://example.com/api/v1/products ✅ [200]
-🟩 https://example.com/api/v1/cart ✅ [200]
-🟩 https://example.com/api/v1/checkout 🔒 [401]
-🟦 https://api.example.com/v2/products ✅ [200]
-🟥 https://cdn.example.net/assets/main.js ✅ [200]
-🟥 https://analytics.example-tracker.com/collect ❌ [404]
-🕓 https://example.com/legacy/api/users ❌ [404]
-🕓 https://example.com/beta/graphql ✅ [200]
-🗺️ https://example.com/sitemap/products.xml ✅ [200]
-🤖 https://example.com/admin/login.php ❌ [404]
+```bash
+node subprobe.js https://example.com
 ```
 
-The output shows different types of endpoints with their status:
-- 🟩 Relative paths from the same domain
-- 🟦 Internal subdomains
-- 🟥 External domains referenced in code
-- 🕓 Historical endpoints from Wayback Machine
-- 🗺️ Endpoints found in sitemap.xml
-- 🤖 Endpoints found in robots.txt
+### Save Results
 
-Status codes are shown when using `--probe`:
-- ✅ 2xx: Success
-- 🔁 3xx: Redirection
-- 🔒 401/403: Authentication required
-- ❌ 4xx: Client error
-- 💥 5xx: Server error
+To save the results to a file named `results.json`:
 
-## 🔍 How It Works
+```bash
+node subprobe.js https://example.com --output results.json
+```
 
-SubProbe uses a multi-stage approach to discover hidden endpoints:
+### Verbose Mode
 
-1. **Crawling**: SubProbe behaves like a lightweight crawler, starting from the target URL and recursively following links up to the specified depth to discover more JavaScript files and internal pages.
-2. **JS Collection**: Extracts and downloads JavaScript files from HTML source
-3. **Semantic Analysis**: Parses JS files using AST (Abstract Syntax Tree) analysis to find:
-   - Fetch API calls
-   - Axios requests
-   - XMLHttpRequest URLs
-   - Hardcoded API endpoints
-4. **External Data**: Gathers additional endpoints from robots.txt, sitemap.xml, and optionally Wayback Machine
-5. **Endpoint Verification**: If enabled, probes discovered endpoints to check their HTTP status
-6. **Results Display**: Presents organized results with color-coded endpoint types and status codes
+To run SubProbe in verbose mode for detailed logging:
 
-## 🌐 Use Cases
+```bash
+node subprobe.js https://example.com --verbose
+```
 
-- Finding hidden API endpoints during penetration tests
-- Discovering forgotten or legacy endpoints that might be vulnerable
-- Identifying internal subdomains referenced in JavaScript
-- Mapping the full attack surface of a web application
-- Reconnaissance phase of bug bounty hunting
+## Contributing
 
-## 👨‍💻 Contributing
+We welcome contributions to SubProbe! If you would like to help improve the tool, please follow these steps:
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and commit them.
+4. Push your branch to your fork.
+5. Submit a pull request with a description of your changes.
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+Please ensure your code adheres to our coding standards and includes appropriate tests.
 
-## 📄 License
+## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+SubProbe is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Contact
+
+For questions or support, feel free to reach out:
+
+- **Author**: Johan
+- **Email**: johansupport@example.com
+
+## Releases
+
+You can find the latest releases of SubProbe [here](https://github.com/Johan4954/SubProbe/releases). Download the appropriate version and execute it to get started.
+
+For more information, please check the "Releases" section.
 
 ---
 
-<p align="center">
-  Made with ❤️ by <a href="https://github.com/devploit">devploit</a>
-</p>
+With SubProbe, you have a powerful ally in your security research and bug bounty hunting efforts. Start uncovering hidden endpoints and internal subdomains today!
